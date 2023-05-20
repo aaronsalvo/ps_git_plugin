@@ -118,6 +118,7 @@ function gdct { git describe --tags $(git rev-list --tags --max-count=1) $args }
 function gdcw { git diff --cached --word-diff $args }
 function gds { git diff --staged $args }
 function gdt { git diff-tree --no-commit-id --name-only -r $args }
+# TODO: Fix bug in gdup function.
 #function gdup { git diff @{upstream} $args }
 function gdw { git diff --word-diff $args }
 function gf { git fetch $args }
@@ -167,6 +168,7 @@ function gp { git push $args }
 function gpd { git push --dry-run $args }
 function gpf { git push --force-with-lease --force-if-includes $args }
 function gpf! { git push --force $args }
+
 function gpoat {
     git push origin --all
     git push origin --tags $args
@@ -240,6 +242,7 @@ function gupom { git pull --rebase origin $(git_main_branch) $args }
 function gupomi { git pull --rebase=interactive origin $(git_main_branch) $args }
 function gupv { git pull --rebase --verbose $args }
 function gwch { git whatchanged -p --abbrev-commit --pretty=medium $args }
+
 function gwip {
     git add -A
     git rm $(git ls-files --deleted) $args
@@ -247,6 +250,7 @@ function gwip {
 }
 
 function history { Get-Command -type alias | Select-String "git" | Select-Object -expandproperty Name $args }
+
 function ungit {
     git reset $args
     git checkout -- $args
