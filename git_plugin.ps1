@@ -15,6 +15,25 @@ foreach ($builtin in $builtins) {
   }
 }
 
+function __git_prompt_git {
+  $env:GIT_OPTIONAL_LOCKS = 0
+  git $args
+}
+
+function git_current_branch {
+  $ref = __git_prompt_git symbolic-ref --quiet HEAD 2>$null
+  $ret = $LASTEXITCODE
+
+  if ($ret -ne 0) {
+    if ($ret -eq 128) { return }  # no git repo.
+    $ref = __git_prompt_git rev-parse --short HEAD 2>$null
+    if (-not $ref) { return }
+  }
+
+  $ref -replace '^refs/heads/', ''
+}
+
+
 # Check if main exists and use instead of master
 function git_main_branch {
   if ((Test-Path -Path "$($env:USERPROFILE)\.git") -or (Get-Command git -ErrorAction SilentlyContinue)) {
